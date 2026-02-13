@@ -44,13 +44,13 @@ python payloadforge.py --module sqli --db mysql --output json
 python payloadforge.py --module cmdi --encode base64
 ```
 Supported Flags
---module → Select vulnerability module (xss, sqli, cmdi)
+`--module` → Select vulnerability module (xss, sqli, cmdi)
 
---db → Select database type (for SQLi module)
+`--db` → Select database type (for SQLi module)
 
---encode → Apply encoding to generated payloads
+`--encode` → Apply encoding to generated payloads
 
---output → Choose export format (json or txt)
+`--output` → Choose export format (json or txt)
 
 ## 5️⃣ Project Structure
 ```
