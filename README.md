@@ -53,7 +53,7 @@ Supported Flags
 --output → Choose export format (json or txt)
 
 ## 5️⃣ Project Structure
-
+```
 payloadforge/
 │
 ├── payloadforge.py
@@ -93,6 +93,7 @@ payloadforge/
 │   └── REFERENCES.md
 │
 └── README.md
+```
 ## 6️⃣ Ethical Notice
 PayloadForge is developed strictly for educational and defensive research purposes.
 
