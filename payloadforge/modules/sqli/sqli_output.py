@@ -27,6 +27,7 @@ class SQLiOutput:
                 print(f"    🛡️ Filter: {p['defense']['filter']}")
                 print(f"    🛡️ Validator: {p['defense']['validator']}")
                 print(f"    🛡️ Why blocked: {p['defense']['why']}")
+                print(f"    🛡️ Modern defense: {p['defense']['modern']}")
                 print("\n" + "="*60)
             
             if 'encoded' in p:
