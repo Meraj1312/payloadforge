@@ -43,8 +43,7 @@ class XSSModule(BaseModule):
         Args:
             context: html/attribute/javascript (from --context flag)
             payload_type: reflected/stored/dom/all (from --type flag)
-            encode: url/base64/hex/html_entity/unicode (from --encode flag)
-            obfuscate: comment_insertion/whitespace_abuse/case_manipulation/mixed_encoding (from --obfuscate flag)
+            obfuscate: comment/whitespace/case (from --obfuscate flag)
             
         Returns:
             Dictionary with generated payloads
@@ -52,7 +51,6 @@ class XSSModule(BaseModule):
         # Get parameters
         context = kwargs.get('context', 'html')
         payload_type = kwargs.get('payload_type', 'all')
-        encode = kwargs.get('encode', None)
         obfuscate = kwargs.get('obfuscate', None)
         
         # Convert string context to Enum
@@ -63,17 +61,6 @@ class XSSModule(BaseModule):
             module_type=payload_type if payload_type != "all" else "all",
             context=context_enum
         )
-        
-        # Apply encoding if requested
-        if encode:
-            for payload in catalog["payloads"]:
-                encoded = self.obfuscation.encode(payload["payload"], encode)
-                payload["encoded_version"] = {
-                    "original": payload["payload"],
-                    "encoded": encoded,
-                    "encoding_type": encode,
-                    "description": f"{encode.upper()} encoded version for WAF bypass testing"
-                }
         
         # Apply obfuscation if requested
         if obfuscate:
@@ -178,10 +165,6 @@ class XSSModule(BaseModule):
                 output.append(f"DOM Source: {payload['source']}")
                 output.append(f"DOM Sink: {payload['sink']}")
             
-            if 'encoded_version' in payload:
-                output.append(f"Encoded: {payload['encoded_version']['encoded']}")
-                output.append(f"Encoding: {payload['encoded_version']['encoding_type']}")
-            
             if 'obfuscated_version' in payload:
                 output.append(f"Obfuscated: {payload['obfuscated_version']['obfuscated']}")
                 output.append(f"Technique: {payload['obfuscated_version']['technique']}")
@@ -200,8 +183,7 @@ class XSSModule(BaseModule):
             "reference": "PortSwigger XSS Cheat Sheet",
             "supported_contexts": ["html", "attribute", "javascript"],
             "supported_types": ["reflected", "stored", "dom"],
-            "encoding_options": ["url", "base64", "hex", "html_entity", "unicode"],
-            "obfuscation_options": ["comment_insertion", "whitespace_abuse", "case_manipulation", "mixed_encoding"]
+            "obfuscation_options": ["comment", "whitespace", "case"]
         })
         return base_metadata
 
@@ -220,10 +202,7 @@ def main():
                        default="all", help="Type of XSS payloads")
     parser.add_argument("--context", choices=["html", "attribute", "javascript"],
                        default="html", help="Context for payload generation")
-    parser.add_argument("--encode", choices=["url", "base64", "hex", "html_entity", "unicode"],
-                       help="Apply encoding to payloads")
-    parser.add_argument("--obfuscate", choices=["comment_insertion", "whitespace_abuse", 
-                       "case_manipulation", "mixed_encoding"],
+    parser.add_argument("--obfuscate", choices=["comment", "whitespace", "case"],
                        help="Apply obfuscation technique")
     parser.add_argument("--output", choices=["json", "txt"], default="json",
                        help="Output format")
@@ -238,7 +217,6 @@ def main():
     catalog = module.generate(
         context=args.context,
         payload_type=args.type,
-        encode=args.encode,
         obfuscate=args.obfuscate
     )
     
