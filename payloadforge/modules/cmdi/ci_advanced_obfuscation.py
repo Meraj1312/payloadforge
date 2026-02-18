@@ -1,24 +1,36 @@
 """
 Advanced Command Injection Obfuscation Module
-Sophisticated evasion techniques: Brace Expansion, String Reversal, Arithmetic Expansion
 """
 
 import base64
-import random
+
 
 class AdvancedObfuscator:
-    """
-    Advanced obfuscation techniques used by sophisticated attackers
-    """
-    # ... (keep all methods exactly as Ali wrote them)
 
-# Preset configurations
+    @staticmethod
+    def brace_expand_basic(command):
+        parts = command.split(" ")
+        return "{" + ",".join(parts) + "}"
+
+    @staticmethod
+    def reverse_with_rev(command):
+        reversed_cmd = command[::-1]
+        return f"rev<<<'{reversed_cmd}'"
+
+    @staticmethod
+    def reverse_base64_combo(command):
+        reversed_cmd = command[::-1]
+        encoded = base64.b64encode(reversed_cmd.encode()).decode()
+        return f"echo {encoded} | base64 -d | rev"
+
+    @staticmethod
+    def ascii_to_char_basic(command):
+        return "$(printf \"" + ''.join([f"\\x{ord(c):02x}" for c in command]) + "\")"
+
+
 ADVANCED_PRESETS = {
-    'brace_basic': {'method': 'brace_expand_basic', 'description': 'Basic brace expansion', 'level': 1},
-    'brace_wildcard': {'method': 'brace_expand_wildcard_combo', 'description': 'Brace + wildcard combo', 'level': 4},
-    'reverse_simple': {'method': 'reverse_with_rev', 'description': 'Simple reversal', 'level': 1},
-    'reverse_advanced': {'method': 'reverse_base64_combo', 'description': 'Reversal + Base64', 'level': 4},
-    'arithmetic_hex': {'method': 'ascii_to_char_basic', 'description': 'Hex ASCII conversion', 'level': 1},
-    'arithmetic_bitwise': {'method': 'ascii_bitwise_construction', 'description': 'Bitwise', 'level': 4},
-    'ultimate': {'method': 'ultimate_obfuscation', 'description': 'Maximum obfuscation', 'level': 'MAX'}
+    'brace': 'brace_expand_basic',
+    'reverse': 'reverse_with_rev',
+    'reverse_base64': 'reverse_base64_combo',
+    'ascii': 'ascii_to_char_basic'
 }
