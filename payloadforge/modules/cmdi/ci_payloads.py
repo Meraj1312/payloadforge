@@ -3,7 +3,6 @@ Command Injection Payload Templates Database
 Educational payload library for authorized security testing
 """
 
-# Command separators by OS
 SEPARATORS = {
     'linux': {
         'semicolon': {
@@ -38,21 +37,21 @@ SEPARATORS = {
         },
         'backtick': {
             'char': '`',
-            'description': 'Command substitution (deprecated)',
+            'description': 'Command substitution',
             'example': '`whoami`',
-            'context': 'Inline command execution'
+            'context': 'Inline execution'
         },
         'dollar_paren': {
             'char': '$()',
-            'description': 'Modern command substitution',
+            'description': 'Modern substitution',
             'example': '$(whoami)',
-            'context': 'Preferred substitution method'
+            'context': 'Preferred method'
         }
     },
     'windows': {
         'ampersand': {
             'char': '&',
-            'description': 'Sequential command execution',
+            'description': 'Sequential execution',
             'example': '& whoami',
             'context': 'CMD separator'
         },
@@ -76,38 +75,12 @@ SEPARATORS = {
         },
         'caret': {
             'char': '^',
-            'description': 'Escape character / line continuation',
+            'description': 'Escape character',
             'example': 'who^ami',
             'context': 'Character escaping'
         }
     }
 }
 
-# Base payload templates
-PAYLOADS = {
-    # ... (rest of ali’s payload templates unchanged)
-}
-
-CONTEXT_PAYLOADS = {
-    # ... (unchanged)
-}
-
-def get_payloads(os_type='linux', category='basic'):
-    if os_type not in PAYLOADS:
-        return []
-    if category not in PAYLOADS[os_type]:
-        return []
-    return PAYLOADS[os_type][category]
-
 def get_separators(os_type='linux'):
     return SEPARATORS.get(os_type, {})
-
-def get_context_payloads(context='parameter'):
-    return CONTEXT_PAYLOADS.get(context, {})
-
-def list_all_categories(os_type='linux'):
-    if os_type not in PAYLOADS:
-        return []
-    return list(PAYLOADS[os_type].keys())
-
-# Educational notes and constants remain untouched
