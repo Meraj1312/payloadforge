@@ -1,25 +1,41 @@
 """
 Command Injection Obfuscation Module
-Standard encoding and evasion techniques for educational purposes
 """
 
 import base64
 import urllib.parse
 import binascii
 
+
 class CommandObfuscator:
-    """
-    Standard obfuscation techniques for command injection payloads
-    """
-    # ... (keep all methods exactly as Ali wrote them)
 
-# Obfuscation presets
+    @staticmethod
+    def url_encode(payload):
+        return urllib.parse.quote(payload)
+
+    @staticmethod
+    def base64_encode(payload):
+        return base64.b64encode(payload.encode()).decode()
+
+    @staticmethod
+    def hex_encode(payload):
+        return binascii.hexlify(payload.encode()).decode()
+
+    @staticmethod
+    def ifs_bypass(payload):
+        return payload.replace(" ", "${IFS}")
+
+    @staticmethod
+    def quote_injection(payload):
+        return payload.replace("a", "a''")
+
+    @staticmethod
+    def wildcard_obfuscation(payload):
+        return payload.replace("etc", "e??")
+
+
 OBFUSCATION_PRESETS = {
-    'light': { 'techniques': ['url'], 'description': 'Light obfuscation - URL encoding only', 'evasion_level': 'Low' },
-    'medium': { 'techniques': ['quote', 'ifs'], 'description': 'Medium obfuscation', 'evasion_level': 'Medium' },
-    'heavy': { 'techniques': ['variable', 'wildcard', 'base64'], 'description': 'Heavy obfuscation', 'evasion_level': 'High' },
-    'extreme': { 'techniques': ['backslash', 'variable', 'wildcard', 'base64'], 'description': 'Extreme evasion', 'evasion_level': 'Very High' }
+    'light': ['url_encode'],
+    'medium': ['quote_injection', 'ifs_bypass'],
+    'heavy': ['wildcard_obfuscation', 'base64_encode']
 }
-
-def get_preset(preset_name):
-    return OBFUSCATION_PRESETS.get(preset_name, OBFUSCATION_PRESETS['light'])
