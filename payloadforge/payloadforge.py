@@ -20,7 +20,7 @@ import sys
 # Core
 from payloadforge.core.exporter import Exporter
 from payloadforge.core.generic_obfuscation import apply_all
-from payloadforge.core.security_controls import simulate_security_controls
+from payloadforge.core.security_controls import simulate
 
 # Encoder
 from payloadforge.encoders.encoding import apply_encoding
