@@ -1,41 +1,27 @@
 """
-Command Injection Obfuscation Module
+Command Injection Obfuscation
+Educational transformations only
 """
 
 import base64
 import urllib.parse
-import binascii
 
 
-class CommandObfuscator:
+class CMDIObfuscation:
 
-    @staticmethod
-    def url_encode(payload):
-        return urllib.parse.quote(payload)
+    def obfuscate(self, payload: str, technique: str) -> str:
 
-    @staticmethod
-    def base64_encode(payload):
-        return base64.b64encode(payload.encode()).decode()
+        if technique == "url":
+            return urllib.parse.quote(payload)
 
-    @staticmethod
-    def hex_encode(payload):
-        return binascii.hexlify(payload.encode()).decode()
+        if technique == "base64":
+            encoded = base64.b64encode(payload.encode()).decode()
+            return f"echo {encoded} | base64 -d"
 
-    @staticmethod
-    def ifs_bypass(payload):
-        return payload.replace(" ", "${IFS}")
+        if technique == "ifs":
+            return payload.replace(" ", "${IFS}")
 
-    @staticmethod
-    def quote_injection(payload):
-        return payload.replace("a", "a''")
+        if technique == "hex":
+            return ''.join(f"\\x{ord(c):02x}" for c in payload)
 
-    @staticmethod
-    def wildcard_obfuscation(payload):
-        return payload.replace("etc", "e??")
-
-
-OBFUSCATION_PRESETS = {
-    'light': ['url_encode'],
-    'medium': ['quote_injection', 'ifs_bypass'],
-    'heavy': ['wildcard_obfuscation', 'base64_encode']
-}
+        return payload
