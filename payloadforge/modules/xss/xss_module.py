@@ -1,59 +1,51 @@
-#!/usr/bin/env python3
-from typing import Dict, List
-from ...core.base import BaseModule
+from typing import List, Dict
+from payloadforge.core.base import BaseModule
 from .xss_payloads import XSSPayloads
-from .xss_obfuscation import XSSObfuscation
-from .xss_signatures import XSSSignatures
 
 
 class XSSModule(BaseModule):
     """
     XSS Payload Generation Module
-    Generates XSS payloads based on context and applies optional obfuscation.
+    Returns standardized payload structure compatible with PayloadForge pipeline.
     """
 
     name = "xss"
-    description = "Cross-Site Scripting (XSS) payload generator"
 
     def __init__(self):
         self.payloads = XSSPayloads()
-        self.obfuscation = XSSObfuscation()
-        self.signatures = XSSSignatures()
 
-    def generate(self, context: str = "all", obfuscate: bool = False) -> Dict:
+    def generate(self, context: str = "all", payload_type: str = "all", **kwargs) -> List[Dict]:
         """
-        Generate XSS payloads.
+        Generate structured XSS payloads.
+        Returns List[dict] to match framework contract.
         """
 
-        payload_catalog = {
-            "metadata": {
-                "module": self.name,
-                "context": context,
-                "obfuscation": obfuscate
-            },
-            "payloads": []
-        }
+        contexts = ["html", "attribute", "javascript"] if context == "all" else [context]
+        types = ["reflected", "stored", "dom"] if payload_type == "all" else [payload_type]
 
-        # Get payloads
-        if context == "all":
-            payloads = self.payloads.get_all_payloads()
-        else:
-            payloads = self.payloads.get_payloads_by_context(context)
+        results: List[Dict] = []
 
-        for payload in payloads:
+        for ctx in contexts:
+            for ptype in types:
 
-            payload_entry = {
-                "payload": payload["payload"],
-                "description": payload.get("description", ""),
-                "bypass_techniques": payload.get("bypass_techniques", []),
-                "defense_notes": self.signatures.get_defense_notes(payload["payload"])
-            }
+                if ptype == "reflected":
+                    payloads = self.payloads.get_reflected(ctx)
 
-            if obfuscate:
-                payload_entry["obfuscated_version"] = self.obfuscation.obfuscate(
-                    payload["payload"]
-                )
+                elif ptype == "stored":
+                    payloads = self.payloads.get_stored(ctx)
 
-            payload_catalog["payloads"].append(payload_entry)
+                elif ptype == "dom":
+                    payloads = self.payloads.get_dom_based(ctx)
 
-        return payload_catalog
+                else:
+                    continue
+
+                for item in payloads:
+                    results.append({
+                        "payload": item["payload"],
+                        "type": f"{ptype}_{ctx}",
+                        "database": None,
+                        "os": None
+                    })
+
+        return results
