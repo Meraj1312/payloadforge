@@ -17,35 +17,50 @@ class XSSModule(BaseModule):
     def generate(self, context: str = "all", payload_type: str = "all", **kwargs) -> List[Dict]:
         """
         Generate structured XSS payloads.
-        Returns List[dict] to match framework contract.
+        Compatible with payloadforge.py pipeline.
         """
-
+    
         contexts = ["html", "attribute", "javascript"] if context == "all" else [context]
         types = ["reflected", "stored", "dom"] if payload_type == "all" else [payload_type]
-
+    
         results: List[Dict] = []
-
+    
         for ctx in contexts:
             for ptype in types:
-
+    
                 if ptype == "reflected":
                     payloads = self.payloads.get_reflected(ctx)
-
+    
                 elif ptype == "stored":
                     payloads = self.payloads.get_stored(ctx)
-
+    
                 elif ptype == "dom":
                     payloads = self.payloads.get_dom_based(ctx)
-
+    
                 else:
                     continue
-
+    
                 for item in payloads:
-                    results.append({
-                        "payload": item["payload"],
+    
+                    original_payload = item.get("payload")
+    
+                    entry = {
+                        "payload": original_payload,
                         "type": f"{ptype}_{ctx}",
                         "database": None,
                         "os": None
-                    })
-
+                    }
+    
+                    try:
+                        entry["module_obfuscation"] = {
+                            "comment": self.obfuscation.obfuscate(original_payload, "comment", ctx),
+                            "whitespace": self.obfuscation.obfuscate(original_payload, "whitespace", ctx),
+                            "case": self.obfuscation.obfuscate(original_payload, "case", ctx),
+                        }
+                    except Exception:
+                        # Fail safe — never break framework
+                        entry["module_obfuscation"] = {}
+    
+                    results.append(entry)
+    
         return results
