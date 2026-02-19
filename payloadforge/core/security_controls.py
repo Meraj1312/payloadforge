@@ -1,37 +1,44 @@
-import re
-from typing import List, Dict
+"""
+Security Control Simulation
+Educational WAF / filter behavior simulation
+"""
 
-
-BLACKLIST_PATTERNS = [
-    r"<script>",
-    r"UNION",
-    r"SELECT",
-    r"&&",
-    r";",
-]
-
-
-def simulate(payloads: List[str]) -> List[Dict]:
+def simulate(payload: str) -> dict:
     """
-    Simulate basic security controls (blacklist filtering).
-    Returns structured results.
+    Simulates basic defensive filtering logic.
+    Educational only.
     """
-    results = []
 
-    for payload in payloads:
-        blocked = False
-        reason = None
+    blocked_patterns = [
+        "<script",
+        "javascript:",
+        "eval(",
+        ";",
+        "&&",
+        "|",
+        "`",
+        "$(",
+        "union select",
+        "or 1=1",
+    ]
 
-        for pattern in BLACKLIST_PATTERNS:
-            if re.search(pattern, payload, re.IGNORECASE):
-                blocked = True
-                reason = f"Blocked by pattern: {pattern}"
-                break
+    detected = []
 
-        results.append({
-            "payload": payload,
-            "blocked": blocked,
-            "reason": reason if blocked else "Passed filters"
-        })
+    for pattern in blocked_patterns:
+        if pattern.lower() in payload.lower():
+            detected.append(pattern)
 
-    return results
+    if detected:
+        return {
+            "blocked": True,
+            "detected_patterns": detected,
+            "risk_level": "high",
+            "reason": "Matched known dangerous signatures"
+        }
+
+    return {
+        "blocked": False,
+        "detected_patterns": [],
+        "risk_level": "low",
+        "reason": "No obvious signature match"
+    }
