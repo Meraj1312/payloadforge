@@ -1,39 +1,34 @@
 """
-Command Injection Detection Signatures and Defense Analysis
+Command Injection Detection Signatures
 """
 
-import re
+from typing import Dict
 
 
-COMMON_BLACKLISTS = {
-    'commands': [
-        'whoami', 'id', 'cat', 'ls', 'dir', 'ping', 'curl',
-        'wget', 'nc', 'bash', 'sh', 'cmd', 'powershell'
-    ],
-    'separators': [';', '&&', '||', '|', '&', '\n', '`', '$()']
-}
+COMMON_SEPARATORS = [";", "&&", "||", "|", "`", "$("]
+COMMON_COMMANDS = ["whoami", "id", "cat", "ls", "ping", "curl", "wget"]
 
 
-def analyze_payload(payload):
+def analyze_payload(payload: str) -> Dict:
+
     findings = {
-        'dangerous_chars': [],
-        'suspicious_commands': [],
-        'risk_level': 'low'
+        "dangerous_tokens": [],
+        "risk_level": "low"
     }
 
-    for char in COMMON_BLACKLISTS['separators']:
-        if char in payload:
-            findings['dangerous_chars'].append(char)
+    for sep in COMMON_SEPARATORS:
+        if sep in payload:
+            findings["dangerous_tokens"].append(sep)
 
-    for cmd in COMMON_BLACKLISTS['commands']:
+    for cmd in COMMON_COMMANDS:
         if cmd in payload.lower():
-            findings['suspicious_commands'].append(cmd)
+            findings["dangerous_tokens"].append(cmd)
 
-    score = len(findings['dangerous_chars']) * 2 + len(findings['suspicious_commands']) * 5
+    score = len(findings["dangerous_tokens"])
 
-    if score >= 10:
-        findings['risk_level'] = 'high'
-    elif score >= 5:
-        findings['risk_level'] = 'medium'
+    if score >= 4:
+        findings["risk_level"] = "high"
+    elif score >= 2:
+        findings["risk_level"] = "medium"
 
     return findings
