@@ -25,16 +25,24 @@ from datetime import datetime
 from pathlib import Path
 
 # Import our modules
-from ci_payloads import (
+from payloadforge.modules.cmdi.ci_payloads import (
     get_payloads, get_separators, get_context_payloads,
     list_all_categories, EDUCATIONAL_NOTES
 )
-from ci_obfuscation import CommandObfuscator, get_preset, OBFUSCATION_PRESETS
-from ci_advanced_obfuscation import AdvancedObfuscator, ADVANCED_PRESETS
-from ci_signatures import (
+
+from payloadforge.modules.cmdi.ci_obfuscation import (
+    CommandObfuscator, get_preset, OBFUSCATION_PRESETS
+)
+
+from payloadforge.modules.cmdi.ci_advanced_obfuscation import (
+    AdvancedObfuscator, ADVANCED_PRESETS
+)
+
+from payloadforge.modules.cmdi.ci_signatures import (
     analyze_payload, explain_detection, get_defense_recommendation,
     MODERN_DEFENSES, DEFENSE_SUMMARY
 )
+
 
 # Version info
 VERSION = "1.0.0"
