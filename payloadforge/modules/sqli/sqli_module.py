@@ -1,6 +1,6 @@
 # modules/sqli/sqli_module.py
 from typing import List
-from core.base import BaseModule
+from payloadforge.core.base import BaseModule
 from .sqli_payloads import SQLI_PAYLOADS
 
 class SQLIModule(BaseModule):
