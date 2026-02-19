@@ -57,16 +57,13 @@ def process_payloads(payloads: list[dict], args) -> list[dict]:
     for idx, item in enumerate(payloads, start=1):
         payload_value = item.get("payload")
 
-        # Apply encoding
-        if args.encode:
+        if args.encode and args.encode != "none":
             payload_value = apply_encoding(payload_value, args.encode)
 
-        # Apply obfuscation
         if args.obfuscate:
-            payload_value = apply_obfuscation(payload_value, args.obfuscate)
+            payload_value = apply_all(payload_value, args.obfuscate)
 
-        # Simulate security controls
-        defense_result = simulate_security_controls(payload_value)
+        defense_result = simulate(payload_value)
 
         processed.append(
             {
