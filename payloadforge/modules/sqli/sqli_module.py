@@ -9,7 +9,7 @@ class SQLIModule(BaseModule):
     def __init__(self):
         self.default_dbs = ["mysql", "postgresql", "mssql"]
 
-    def generate(self, db: str = "all", injection_type: str = "all", **kwargs) -> List[str]:
+    def generate(self, db: str = "all", injection_type: str = "all", **kwargs) -> List[dict]:
         """
         Return a flat list of payload strings.
         Parameters are accepted for CLI->framework wiring, but no encoding/obf/defense runs here.
