@@ -3,7 +3,7 @@ from typing import List
 from core.base import BaseModule
 from .sqli_payloads import SQLI_PAYLOADS
 
-class SQLiModule(BaseModule):
+class SQLIModule(BaseModule):
     name = "sqli"
 
     def __init__(self):
