@@ -23,7 +23,7 @@ from payloadforge.core.generic_obfuscation import apply_all
 from payloadforge.core.security_controls import simulate
 
 # Encoder
-from payloadforge.encoders.encoding import apply_encoding
+from payloadforge.encoders.encode import apply_encoding
 
 # Modules
 from payloadforge.modules.sqli.sqli_module import SQLIModule
