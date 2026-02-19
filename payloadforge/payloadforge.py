@@ -28,7 +28,7 @@ from payloadforge.encoders.encode import apply_encoding
 # Modules
 from payloadforge.modules.sqli.sqli_module import SQLIModule
 from payloadforge.modules.xss.xss_module import XSSModule
-# from payloadforge.modules.cmdi.ci_module import CMDIModule
+from payloadforge.modules.cmdi.cmdi_module import CMDIModule
 
 
 def get_module(module_name: str):
