@@ -1,1 +1,21 @@
+# Core utilities
 argparse
+pathlib
+typing-extensions
+
+# Encoding / obfuscation
+urllib3
+binascii
+base64
+
+# CLI / formatting
+colorama
+
+# Optional exports
+json
+
+# For type hints and modern Python features
+typing_extensions
+
+# For defensive simulations (if using regex or analysis)
+regex
