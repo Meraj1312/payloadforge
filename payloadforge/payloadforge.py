@@ -30,6 +30,21 @@ from payloadforge.modules.sqli.sqli_module import SQLIModule
 from payloadforge.modules.xss.xss_module import XSSModule
 from payloadforge.modules.cmdi.cmdi_module import CMDIModule
 
+# Banner dependencies
+import pyfiglet
+from colorama import Fore, Style, init
+
+# Initialize colorama for Windows
+init(autoreset=True)
+
+def show_banner():
+    """Display the tool banner (once at startup)."""
+    banner = pyfiglet.figlet_format("PayloadForge", font="slant")
+    print(Fore.CYAN + banner)
+    print(Fore.YELLOW + "Educational Payload Generation Framework")
+    print(Fore.GREEN + "Version: 1.0.0")
+    print(Fore.CYAN + "=" * 65 + Style.RESET_ALL)
+
 
 def get_module(module_name: str):
     """
@@ -51,7 +66,6 @@ def process_payloads(payloads: list[dict], args) -> list[dict]:
     """
     Applies encoding, obfuscation and defense simulation.
     """
-
     processed = []
 
     for idx, item in enumerate(payloads, start=1):
@@ -80,6 +94,8 @@ def process_payloads(payloads: list[dict], args) -> list[dict]:
 
 
 def main():
+    show_banner() 
+
     parser = argparse.ArgumentParser(
         description="PayloadForge - Educational Payload Generator"
     )
@@ -104,7 +120,7 @@ def main():
         "-o",
         "--obfuscate",
         default=None,
-        help="Obfuscation mode",
+        help="Obfuscation mode (currently supports: case)",
     )
 
     parser.add_argument(
@@ -136,6 +152,10 @@ def main():
         # 4️ Export
         exporter = Exporter(output_format=args.format, filename=args.filename)
         exporter.export(final_payloads)
+
+        # Optional runtime info
+        print(Fore.MAGENTA + f"Module: {args.module} | Encoding: {args.encode} | Format: {args.format}")
+        print(Fore.CYAN + "=" * 65)
 
     except Exception as e:
         print(f"[!] Error: {e}")
