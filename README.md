@@ -199,11 +199,12 @@ python -m payloadforge.payloadforge -h
 | `-m`, `--module`    | Required. Select module: `sqli`, `xss`, `cmdi` |
 | `-e`, `--encode`    | Encoding mode: `none`, `url`, `base64`, `hex` |
 | `-o`, `--obfuscate` | Obfuscation mode (currently supports: `case`)  |
-| `-f`, `--format`    | Output format: `terminal`, `json`, `txt`, `burp`, `zap`, `all` |
-| `--filename`  | Custom export filename (without extension)     |
 | `--db`        | Select target database (SQLi only): `all`, `mysql`, `postgresql`, `mssql` |
 | `--type`      | Select injection type (SQLi only): `all`, `error`, `union`, `blind`, `comment_bypass`, `case_variation` |
-| `-h`, `--help`      | Show help message                              |
+| `-h`, `--help`      | Show help message|
+| `-f`, `--format`    | Output format: `terminal`, `json`, `txt`, `burp`, `zap`, `all` |
+| `--filename`  | Custom export filename (without extension)     |
+
 
 ## Usage Examples
 
