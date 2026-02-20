@@ -80,8 +80,8 @@ python -m payloadforge.payloadforge --module sqli --obfuscate case
 
 | Argument | Description                                    |
 |----------|------------------------------------------------|
-| `--db`     | Target DB: `all`, `mysql`, `postgresql`, `mssql` |
-| `--type`   | Injection type: `all`, `error`, `union`, `blind`, `comment_bypass`, `case_variation` |
+| `--database`     | Target DB: `all`, `mysql`, `postgresql`, `mssql` |
+| `--sqli-type`   | Injection type: `all`, `error`, `union`, `blind`, `comment_bypass`, `case_variation` |
 
 **Example:**
 
