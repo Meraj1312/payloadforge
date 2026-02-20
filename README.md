@@ -1,8 +1,12 @@
+<p align="center">
 <img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/10372204-f5ac-44f5-86f3-86eba417eeb7" />
+</p> <p align="center">
+  A Python-based modular payload generation and reconnaissance framework for offensive security professionals  
 
-A Python-based modular payload generation and reconnaissance framework for offensive security professionals
+  Developed by OMEGA Team | Offensive Security & Penetration Testing  
 
-Developed by OMEGA Team | Offensive Security & Penetration Testing
+  A modular, educational payload generation framework for modeling common web exploitation patterns and defensive detection logic.
+</p>
 
 
 # PayloadForge
