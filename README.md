@@ -184,3 +184,25 @@ Develops the Command Injection module in `modules/cmdi/`.
 Implements Linux and Windows command template patterns, separator examples, and conceptual filter bypass explanations.  
 Adds defensive notes without enabling real command execution.
 
+## Roadmap
+
+### Short-Term Goals
+- [ ] Add SSTI module
+- [ ] Add LFI module
+- [ ] Improve risk scoring logic
+- [ ] Add plugin-based module architecture
+- [ ] Add unit tests for encoding and obfuscation
+
+### Mid-Term Goals
+- [ ] Support chained encodings
+- [ ] Add YAML export format
+- [ ] Add configuration file support
+- [ ] Improve security simulation engine
+
+### Long-Term Vision
+- [ ] Defensive training mode
+- [ ] Custom WAF rule simulation
+- [ ] Modular extension marketplace
+- [ ] Integration-ready output formats for security tools
+
+PayloadForge aims to remain an educational, ethical security research framework.
