@@ -200,7 +200,9 @@ python -m payloadforge.payloadforge -h
 | `-e`, `--encode`    | Encoding mode: `none`, `url`, `base64`, `hex` |
 | `-o`, `--obfuscate` | Obfuscation mode (currently supports: `case`)  |
 | `-f`, `--format`    | Output format: `terminal`, `json`, `txt`, `burp`, `zap`, `all` |
-| `--filename`  | Custom export filename                         |
+| `--filename`  | Custom export filename (without extension)     |
+| `--db`        | Select target database (SQLi only): `all`, `mysql`, `postgresql`, `mssql` |
+| `--type`      | Select injection type (SQLi only): `all`, `error`, `union`, `blind`, `comment_bypass`, `case_variation` |
 | `-h`, `--help`      | Show help message                              |
 
 ## Usage Examples
