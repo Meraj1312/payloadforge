@@ -1,4 +1,4 @@
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/10372204-f5ac-44f5-86f3-86eba417eeb7" />
+<img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/10372204-f5ac-44f5-86f3-86eba417eeb7" />
 
 
 # PayloadForge
