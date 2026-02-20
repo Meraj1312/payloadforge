@@ -1,46 +1,51 @@
 import random
-from typing import List
 
 
-def case_variation(payloads: List[str]) -> List[str]:
+def case_variation(payload: str) -> str:
     """
     Randomly change character casing.
     """
-    mutated = []
-    for payload in payloads:
-        new_payload = ""
-        for char in payload:
-            if char.isalpha():
-                new_payload += random.choice([char.upper(), char.lower()])
-            else:
-                new_payload += char
-        mutated.append(new_payload)
-    return mutated
+    new_payload = ""
+    for char in payload:
+        if char.isalpha():
+            new_payload += random.choice([char.upper(), char.lower()])
+        else:
+            new_payload += char
+    return new_payload
 
 
-def extra_whitespace(payloads: List[str]) -> List[str]:
+def extra_whitespace(payload: str) -> str:
     """
     Replace single spaces with multiple spaces.
     """
-    return [p.replace(" ", "   ") for p in payloads]
+    return payload.replace(" ", "   ")
 
 
-def random_tabs(payloads: List[str]) -> List[str]:
+def random_tabs(payload: str) -> str:
     """
-    Randomly insert tabs between words.
+    Replace spaces with tabs.
     """
-    mutated = []
-    for p in payloads:
-        parts = p.split(" ")
-        mutated.append("\t".join(parts))
-    return mutated
+    return "\t".join(payload.split(" "))
 
 
-def apply_all(payloads: List[str]) -> List[str]:
+def apply_all(payload: str, mode: str | None = None) -> str:
     """
-    Apply all generic obfuscation techniques.
+    Apply selected generic obfuscation technique.
     """
-    payloads = case_variation(payloads)
-    payloads = extra_whitespace(payloads)
-    payloads = random_tabs(payloads)
-    return payloads
+
+    if mode == "case":
+        return case_variation(payload)
+
+    elif mode == "whitespace":
+        return extra_whitespace(payload)
+
+    elif mode == "tabs":
+        return random_tabs(payload)
+
+    elif mode == "all":
+        payload = case_variation(payload)
+        payload = extra_whitespace(payload)
+        payload = random_tabs(payload)
+        return payload
+
+    return payload
