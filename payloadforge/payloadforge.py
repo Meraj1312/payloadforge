@@ -37,6 +37,7 @@ from colorama import Fore, Style, init
 # Initialize colorama for Windows
 init(autoreset=True)
 
+
 def show_banner():
     """Display the tool banner (once at startup)."""
     banner = pyfiglet.figlet_format("PayloadForge", font="slant")
@@ -47,9 +48,7 @@ def show_banner():
 
 
 def get_module(module_name: str):
-    """
-    Returns the correct module instance.
-    """
+    """Returns the correct module instance."""
     module_map = {
         "sqli": SQLIModule,
         "xss": XSSModule,
@@ -63,9 +62,7 @@ def get_module(module_name: str):
 
 
 def process_payloads(payloads: list[dict], args) -> list[dict]:
-    """
-    Applies encoding, obfuscation and defense simulation.
-    """
+    """Applies encoding, obfuscation and defense simulation."""
     processed = []
 
     for idx, item in enumerate(payloads, start=1):
@@ -94,12 +91,13 @@ def process_payloads(payloads: list[dict], args) -> list[dict]:
 
 
 def main():
-    show_banner() 
+    show_banner()  
 
     parser = argparse.ArgumentParser(
         description="PayloadForge - Educational Payload Generator"
     )
 
+    # Core arguments
     parser.add_argument(
         "-m",
         "--module",
@@ -137,6 +135,22 @@ def main():
         help="Custom export filename (without extension)",
     )
 
+    # SQLi-specific arguments
+    parser.add_argument(
+        "--db",
+        default="all",
+        choices=["all", "mysql", "postgresql", "mssql"],
+        help="Select target database (SQLi only)",
+    )
+
+    parser.add_argument(
+        "--type",
+        dest="injection_type",
+        default="all",
+        choices=["all", "error", "union", "blind", "comment_bypass", "case_variation"],
+        help="Select injection type (SQLi only)",
+    )
+
     args = parser.parse_args()
 
     try:
@@ -144,7 +158,13 @@ def main():
         module = get_module(args.module)
 
         # 2️ Generate raw payloads
-        raw_payloads = module.generate()
+        if args.module == "sqli":
+            raw_payloads = module.generate(
+                db=args.db,
+                injection_type=args.injection_type
+            )
+        else:
+            raw_payloads = module.generate()
 
         # 3️ Process (encode, obfuscate, simulate defense)
         final_payloads = process_payloads(raw_payloads, args)
