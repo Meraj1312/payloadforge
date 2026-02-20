@@ -145,8 +145,8 @@ python -m payloadforge.payloadforge --help
 | `--module`    | Required. Select module: `sqli`, `xss`, `cmdi` |
 | `--encode`    | Encoding mode: `none`, `url`, `base64`, `hex` |
 | `--obfuscate` | Obfuscation mode: `case`, `whitespace`, `tabs`, `all` |
-| `--db`        | Target database (SQLi only)                    |
-| `--type`      | SQL injection type (SQLi only)                 |
+| `--database`        | Target database (SQLi only)                    |
+| `--sqli-type`      | SQL injection type (SQLi only)                 |
 | `--xss-type`  | XSS vulnerability type                         |
 | `--context`   | XSS injection context                          |
 | `--format`    | Output format                                  |
