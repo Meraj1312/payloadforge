@@ -145,10 +145,10 @@ python -m payloadforge.payloadforge --help
 | `--module`    | Required. Select module: `sqli`, `xss`, `cmdi` |
 | `--encode`    | Encoding mode: `none`, `url`, `base64`, `hex` |
 | `--obfuscate` | Obfuscation mode: `case`, `whitespace`, `tabs`, `all` |
-| `--database`        | Target database (SQLi only)                    |
-| `--sqli-type`      | SQL injection type (SQLi only)                 |
-| `--xss-type`  | XSS vulnerability type                         |
-| `--context`   | XSS injection context                          |
+| `--database`        | Target database `all`, `mysql`, `postgresql`, `mssql`                   |
+| `--sqli-type`      | SQL injection type `all`, `error`, `union`, `blind`, `comment_bypass`, `case_variation`                |
+| `--xss-type`  |  `all`, `reflected`, `stored`, `dom`                        |
+| `--context`   | `all`, `html`, `attribute`, `javascript`                |
 | `--format`    | Output format                                  |
 | `--filename`  | Custom export filename                         |
 
