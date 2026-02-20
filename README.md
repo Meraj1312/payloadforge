@@ -33,12 +33,7 @@ python -m payloadforge.payloadforge -m sqli -f json
 
 PayloadForge is a Python-based framework for educational and defensive security research. It generates structured payload templates for common web vulnerabilities and simulates how defensive systems may classify or block them.
 
-### Focus Areas
 
-*   Exploitation patterns (in a controlled environment)
-*   Signature-based detection
-*   Input filtering logic
-*   Defensive response modeling
 
 ### Important Notice
 
