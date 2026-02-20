@@ -1,208 +1,238 @@
-# PayloadForge
+*PayloadForge*
 
-## 1️⃣ Project Overview
+A modular, educational payload generation framework for modeling common web exploitation patterns and defensive detection logic.
 
-PayloadForge is a modular, educational payload generation framework designed to demonstrate common web exploitation patterns and their corresponding defensive considerations.
+ *Installation & Module Execution*
 
-This project is built strictly for **educational and defensive learning purposes**.
+Clone the repository:
 
-- Generates **payload templates only**
-- Does **not execute** payloads
-- Does **not automate attacks**
-- Does **not interact with live systems**
-- Does **not perform network or database operations**
-
-The goal is to understand how vulnerabilities work and how they should be mitigated — not to exploit real systems.
-
----
-
-## 2️⃣ Features
-
-- Cross-Site Scripting (XSS) payload templates  
-- SQL Injection (SQLi) payload templates  
-- Command Injection (CMDi) payload templates  
-- Encoding support (URL, Base64, Hex)  
-- JSON and TXT export functionality  
-- Modular architecture for clean extension  
-
----
-
-## 3️⃣ Installation
-
-```bash
-git clone https://github.com/yourusername/payloadforge.git
+git clone https://github.com/Meraj1312/payloadforge.git
 cd payloadforge
-No external dependencies are required beyond standard Python.
-```
-## 4️⃣ Usage Examples
 
-```
-python3 -m payloadforge.payloadforge -m sqli
+Important:
+To run PayloadForge correctly and avoid Python import issues, you must run it as a module using -m:
 
-python3 -m payloadforge.payloadforge -m xss -e url
+python -m payloadforge.payloadforge -m <module> [options]
 
-python3 -m payloadforge.payloadforge -m cmdi -o case
+Example:
 
-python3 -m payloadforge.payloadforge -m sqli -f json --filename payloads
+python -m payloadforge.payloadforge -m sqli -f json
 
-```
-Supported Flags
-`--module` → Select vulnerability module (xss, sqli, cmdi)
+This ensures Python treats the project as a package, resolving imports like payloadforge.core.exporter.
 
-`--db` → Select database type (for SQLi module)
+Requirements:
 
-`--encode` → Apply encoding to generated payloads
+Python 3.x
 
-`--output` → Choose export format (json or txt)
+No external dependencies
 
-## 5️⃣ Project Structure
-```
+🚀 Overview
+
+PayloadForge is a Python-based framework designed for educational and defensive security research.
+
+It generates structured payload templates for common web vulnerabilities and simulates how defensive systems may classify or block them.
+
+This project focuses on understanding:
+
+Exploitation patterns (in a controlled way)
+
+Signature-based detection
+
+Input filtering logic
+
+Defensive response modeling
+
+⚠️ Important Notice
+
+✅ Generates payload templates only
+
+✅ Simulates defensive analysis
+
+❌ Does NOT execute payloads
+
+❌ Does NOT perform network scanning
+
+❌ Does NOT attack live systems
+
+This tool is strictly intended for:
+
+Security learning
+
+CTF environments
+
+Defensive research
+
+Controlled lab testing
+
+ Supported Modules
+Module	Description
+sqli	SQL Injection payload templates
+xss	Cross-Site Scripting payload templates
+cmdi	Command Injection payload templates
+ Encoding Support
+
+Payloads can be encoded using:
+
+Option	Description
+none	No encoding (default)
+url	URL encoding
+base64	Base64 encoding
+hex	Hex encoding
+Example
+python -m payloadforge.payloadforge -m xss -e base64
+ Obfuscation Support
+
+Currently supported obfuscation mode:
+
+Option	Description
+case	Randomized case variation
+Example
+
+Original:
+
+UNION SELECT username FROM users
+
+Obfuscated:
+
+uNiOn SeLeCt username FrOm users
+
+This demonstrates how simple transformations may impact signature-based detection.
+
+ Defense Intelligence Output
+
+Each generated payload may include simulated defensive analysis.
+
+Example output:
+
+[Defense Info]
+{
+  'blocked': True,
+  'detected_patterns': ['union select'],
+  'risk_level': 'high',
+  'reason': 'Matched known dangerous signatures'
+}
+
+This provides insight into:
+
+Pattern matching detection
+
+Risk classification
+
+Signature triggers
+
+Why a payload would be blocked
+
+The goal is to bridge offensive modeling with defensive understanding.
+
+ Export Formats
+
+PayloadForge supports multiple export formats:
+
+Format	Description
+terminal	Print to CLI
+json	Export JSON file
+txt	Export plain text
+burp	Burp Suite compatible list
+zap	OWASP ZAP compatible list
+all	Export all formats
+ Default Filename Behavior
+
+If no custom filename is provided using --filename, PayloadForge automatically generates a unique filename using this pattern:
+
+payloadforge_<YYYYMMDD>_<HHMMSS>_<format>
+Example
+
+Command:
+
+python -m payloadforge.payloadforge -m sqli -f zap
+
+Generated file:
+
+payloadforge_20260220_022513_zap
+
+Where:
+
+YYYYMMDD → Date
+
+HHMMSS → Time
+
+format → Selected export format
+
+This ensures:
+
+✅ Unique filenames
+
+✅ No accidental overwriting
+
+✅ Organized export history
+
+Custom Filename
+python -m payloadforge.payloadforge -m sqli -f json --filename custom_output
+
+Generates:
+
+custom_output.json
+ CLI Help
+
+To view all available options:
+
+python -m payloadforge.payloadforge -h
+
+Available arguments:
+
+-m, --module        Required. Select module: sqli, xss, cmdi
+-e, --encode        Encoding mode: none, url, base64, hex
+-o, --obfuscate     Obfuscation mode (currently supports: case)
+-f, --format        Output format: terminal, json, txt, burp, zap, all
+--filename          Custom export filename
+-h, --help          Show help message
+ Usage Examples
+Generate SQLi payloads
+python -m payloadforge.payloadforge -m sqli
+Generate XSS payloads with encoding
+python -m payloadforge.payloadforge -m xss -e url
+Generate CMDi payloads with obfuscation
+python -m payloadforge.payloadforge -m cmdi -o case
+Export to JSON
+python -m payloadforge.payloadforge -m sqli -f json
+Export all formats
+python -m payloadforge.payloadforge -m xss -f all
+🏗 Project Structure
 payloadforge/
 │
 ├── payloadforge.py
-│
 ├── core/
-│   ├── base.py
-│   ├── registry.py
-│   └── exporter.py
-│
-├── modules/
-│   ├── xss/
-│   │   ├── payloads.py
-│   │   ├── contexts.py
-│   │   └── notes.py
-│   │
-│   ├── sqli/
-│   │   ├── payloads.py
-│   │   ├── databases.py
-│   │   └── notes.py
-│   │
-│   ├── cmdi/
-│   │   ├── payloads.py
-│   │   ├── platforms.py
-│   │   └── notes.py
-│
+│   ├── exporter.py
+│   ├── generic_obfuscation.py
+│   └── security_controls.py
 ├── encoders/
-│   ├── url.py
-│   ├── base64.py
-│   └── hex.py
-│
-├── data/
-│   └── sample_exports/
-│
-├── docs/
-│   ├── ETHICS.md
-│   ├── DEFENSIVE_NOTES.md
-│   └── REFERENCES.md
-│
+│   └── encode.py
+├── modules/
+│   ├── sqli/
+│   ├── xss/
+│   └── cmdi/
 └── README.md
-```
-![Alt text](payloadforge/Payloadforge.jpg)
 
-## 6️⃣ Ethical Notice
-PayloadForge is developed strictly for educational and defensive research purposes.
+The architecture is modular and easily extendable for:
 
-No live exploitation capabilities
+Additional vulnerability modules
 
-No automated attack functionality
+Advanced obfuscation strategies
 
-No system interaction or execution
+More encoding techniques
 
-Templates only
+Enhanced defensive modeling
 
-Users are responsible for ensuring all usage complies with applicable laws and ethical standards.
+ Ethical Usage
 
-## 7️⃣ Team & Responsibilities
+This project is intended strictly for:
 
-- [Muhammad Meraj](#muhammad-meraj) – Project Coordination & Documentation
-- [Haris Elahi](#haris-elahi) – CLI Integration & Encoders
-- [Rana Ahmed](#rana-ahmed) – Core Architecture & Defensive Notes
-- [Muhammad Saady](#muhammad-saady) – Export & Output System
-- [Areez Ahmad](#areez-ahmad) – XSS Module Developer
-- [Sondos Sayed](#sondos-sayed) – SQL Injection Module Developer
-- [Ali Abbas](#ali-abbas) – Command Injection Module Developer
+Educational purposes
 
----
+Authorized security testing
 
-### Muhammad Meraj
-**Role:** Project Coordination & Documentation  
+Defensive research
 
-Oversees overall project structure and ensures consistency across modules.  
-Responsible for writing `README.md`, `ETHICS.md`, and `REFERENCES.md`.  
-Reviews module integration, maintains architectural consistency, and ensures the project aligns with ethical and educational objectives.
+Controlled lab environments
 
----
-
-### Haris Elahi
-**Role:** CLI Integration Engineer & Encoder Developer  
-
-Implements `payloadforge.py` and handles CLI argument parsing (`--module`, `--encode`, `--db`, `--output`).  
-Connects registry, modules, encoders, and exporter.  
-Develops encoding modules in `encoders/` (`url.py`, `base64.py`, `hex.py`) and ensures full system integration.
-
----
-
-### Rana Ahmed
-**Role:** Core Architecture Engineer & Defensive Documentation  
-
-Designs modular architecture in `core/base.py` and `core/registry.py`.  
-Implements the `BaseModule` structure and module registration logic.  
-Authors `DEFENSIVE_NOTES.md`, documenting prevention and mitigation strategies for demonstrated vulnerabilities.
-
----
-
-### Muhammad Saady
-**Role:** Export & Output Engineer  
-
-Develops `core/exporter.py` to handle JSON and TXT export logic.  
-Formats CLI output professionally and prepares structured sample exports in `data/sample_exports/`.
-
----
-
-### Areez Ahmad
-**Role:** XSS Module Developer  
-
-Develops the XSS module in `modules/xss/`.  
-Creates payload templates for Reflected, Stored, and DOM-based XSS.  
-Implements context awareness (HTML, Attribute, JavaScript contexts) and adds defensive notes and bypass explanations.
-
----
-
-### Sondos Sayed
-**Role:** SQL Injection Module Developer  
-
-Develops the SQL Injection module in `modules/sqli/`.  
-Creates structured templates for Error-based, Union-based, and Blind SQLi (descriptive only).  
-Implements database selection logic (MySQL, PostgreSQL, MSSQL) and adds defensive documentation.
-
----
-
-### Ali Abbas
-**Role:** Command Injection Module Developer  
-
-Develops the Command Injection module in `modules/cmdi/`.  
-Implements Linux and Windows command template patterns, separator examples, and conceptual filter bypass explanations.  
-Adds defensive notes without enabling real command execution.
-
-## Roadmap
-
-### Short-Term Goals
-- [ ] Add SSTI module
-- [ ] Add LFI module
-- [ ] Improve risk scoring logic
-- [ ] Add plugin-based module architecture
-- [ ] Add unit tests for encoding and obfuscation
-
-### Mid-Term Goals
-- [ ] Support chained encodings
-- [ ] Add YAML export format
-- [ ] Add configuration file support
-- [ ] Improve security simulation engine
-
-### Long-Term Vision
-- [ ] Defensive training mode
-- [ ] Custom WAF rule simulation
-- [ ] Modular extension marketplace
-- [ ] Integration-ready output formats for security tools
-
-PayloadForge aims to remain an educational, ethical security research framework.
+Users are responsible for ensuring legal and ethical usage.
