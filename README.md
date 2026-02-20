@@ -147,9 +147,9 @@ python -m payloadforge.payloadforge --help
 | `--obfuscate` | Obfuscation mode: `case`, `whitespace`, `tabs`, `all` |
 | `--database`        | Target database `all`, `mysql`, `postgresql`, `mssql`                   |
 | `--sqli-type`      | SQL injection type `all`, `error`, `union`, `blind`, `comment_bypass`, `case_variation`                |
-| `--xss-type`  |  `all`, `reflected`, `stored`, `dom`                        |
+| `--xss-type`  | XSS type  `all`, `reflected`, `stored`, `dom`                        |
 | `--context`   | `all`, `html`, `attribute`, `javascript`                |
-| `--format`    | Output format                                  |
+| `--format`    | `all`, `terminal`, `json`, `txt`, `burp`, `zap`,                               |
 | `--filename`  | Custom export filename                         |
 
 Note: `--format` and `--filename` are listed last intentionally.
