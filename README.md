@@ -37,11 +37,14 @@ No external dependencies are required beyond standard Python.
 ## 4️⃣ Usage Examples
 
 ```
-python payloadforge.py --module xss
+python3 -m payloadforge.payloadforge -m sqli
 
-python payloadforge.py --module sqli --db mysql --output json
+python3 -m payloadforge.payloadforge -m xss -e url
 
-python payloadforge.py --module cmdi --encode base64
+python3 -m payloadforge.payloadforge -m cmdi -o case
+
+python3 -m payloadforge.payloadforge -m sqli -f json --filename payloads
+
 ```
 Supported Flags
 `--module` → Select vulnerability module (xss, sqli, cmdi)
