@@ -1,3 +1,6 @@
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/10372204-f5ac-44f5-86f3-86eba417eeb7" />
+
+
 # PayloadForge
 
 A modular, educational payload generation framework for modeling common web exploitation patterns and defensive detection logic.
