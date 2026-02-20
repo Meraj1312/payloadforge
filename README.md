@@ -6,7 +6,7 @@
 </p> <p align="center">
   A Python-based modular payload generation and reconnaissance framework
   </p> <p align="center">
-  Developed by ##OMEGA Team## | Offensive Security & Penetration Testing  
+  Developed by <strong>OMEGA Team</strong> | Offensive Security & Penetration Testing  
   </p> <p align="center">
   A modular, educational payload generation framework for modeling common web exploitation patterns and defensive detection logic.
 </p>
