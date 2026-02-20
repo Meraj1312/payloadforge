@@ -12,45 +12,55 @@ class XSSModule(BaseModule):
     name = "xss"
 
     def __init__(self):
+        super().__init__()
         self.payloads = XSSPayloads()
+        self.default_contexts = ["html", "attribute", "javascript"]
+        self.default_types = ["reflected", "stored", "dom"]
 
-    def generate(self, context: str = "all", payload_type: str = "all", **kwargs) -> List[Dict]:
+    def generate(
+        self,
+        context: str = "all",
+        xss_type: str = "all",
+        **kwargs
+    ) -> List[Dict]:
         """
         Generate structured XSS payloads.
         Compatible with payloadforge.py pipeline.
         """
-    
-        contexts = ["html", "attribute", "javascript"] if context == "all" else [context]
-        types = ["reflected", "stored", "dom"] if payload_type == "all" else [payload_type]
-    
+
+        contexts = self.default_contexts if context == "all" else [context]
+        types = self.default_types if xss_type == "all" else [xss_type]
+
         results: List[Dict] = []
-    
+
         for ctx in contexts:
             for ptype in types:
-    
+
                 if ptype == "reflected":
                     payloads = self.payloads.get_reflected(ctx)
-    
+
                 elif ptype == "stored":
                     payloads = self.payloads.get_stored(ctx)
-    
+
                 elif ptype == "dom":
                     payloads = self.payloads.get_dom_based(ctx)
-    
+
                 else:
                     continue
-    
+
                 for item in payloads:
-    
+
                     original_payload = item.get("payload")
-    
+
                     entry = {
                         "payload": original_payload,
-                        "type": f"{ptype}_{ctx}",
+                        "type": ptype,
+                        "context": ctx,
                         "database": None,
                         "os": None
                     }
-    
+
+                    # Module-level obfuscation (safe fail)
                     try:
                         entry["module_obfuscation"] = {
                             "comment": self.obfuscation.obfuscate(original_payload, "comment", ctx),
@@ -58,9 +68,8 @@ class XSSModule(BaseModule):
                             "case": self.obfuscation.obfuscate(original_payload, "case", ctx),
                         }
                     except Exception:
-                        # Fail safe — never break framework
                         entry["module_obfuscation"] = {}
-    
+
                     results.append(entry)
-    
+
         return results
