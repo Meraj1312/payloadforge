@@ -1,179 +1,116 @@
-PayloadForge
+# PayloadForge
 
 A modular, educational payload generation framework for modeling common web exploitation patterns and defensive detection logic.
 
-Installation and Module Execution
+## Installation and Module Execution
 
 Clone the repository:
 
-Bash
-
-
+```bash
 git clone https://github.com/Meraj1312/payloadforge.git
 cd payloadforge
+```
 
+**Important:**
+To run PayloadForge correctly and avoid Python import issues, run it as a module using `-m`:
 
-
-Important:
-To run PayloadForge correctly and avoid Python import issues, run it as a module using -m:
-
-Bash
-
-
+```bash
 python -m payloadforge.payloadforge -m <module> [options]
+```
 
+**Example:**
 
-
-Example:
-
-Bash
-
-
+```bash
 python -m payloadforge.payloadforge -m sqli -f json
+```
 
+## Requirements
 
+*   Python 3.x
+*   No external dependencies
 
-Requirements
-
-•
-Python 3.x
-
-•
-No external dependencies
-
-Overview
+## Overview
 
 PayloadForge is a Python-based framework for educational and defensive security research. It generates structured payload templates for common web vulnerabilities and simulates how defensive systems may classify or block them.
 
-Focus Areas
+### Focus Areas
 
-•
-Exploitation patterns (in a controlled environment )
+*   Exploitation patterns (in a controlled environment)
+*   Signature-based detection
+*   Input filtering logic
+*   Defensive response modeling
 
-•
-Signature-based detection
+### Important Notice
 
-•
-Input filtering logic
+*   Generates payload templates only
+*   Simulates defensive analysis
+*   Does NOT execute payloads
+*   Does NOT perform network scanning
+*   Does NOT attack live systems
 
-•
-Defensive response modeling
+### Intended For
 
-Important Notice
+*   Security learning
+*   CTF environments
+*   Defensive research
+*   Controlled lab testing
 
-•
-Generates payload templates only
+## Supported Modules
 
-•
-Simulates defensive analysis
+| Module | Description                   |
+|--------|-------------------------------|
+| `sqli`   | SQL Injection payload templates |
+| `xss`    | Cross-Site Scripting payload templates |
+| `cmdi`   | Command Injection payload templates |
 
-•
-Does NOT execute payloads
-
-•
-Does NOT perform network scanning
-
-•
-Does NOT attack live systems
-
-Intended For
-
-•
-Security learning
-
-•
-CTF environments
-
-•
-Defensive research
-
-•
-Controlled lab testing
-
-Supported Modules
-
-Module
-Description
-sqli
-SQL Injection payload templates
-xss
-Cross-Site Scripting payload templates
-cmdi
-Command Injection payload templates
-
-
-
-
-Encoding Support
+## Encoding Support
 
 Payloads can be encoded using:
 
-Option
-Description
-none
-No encoding (default)
-url
-URL encoding
-base64
-Base64 encoding
-hex
-Hex encoding
+| Option   | Description       |
+|----------|-------------------|
+| `none`     | No encoding (default) |
+| `url`      | URL encoding      |
+| `base64`   | Base64 encoding   |
+| `hex`      | Hex encoding      |
 
+**Example:**
 
-
-
-Example:
-
-Bash
-
-
+```bash
 python -m payloadforge.payloadforge -m xss -e base64
+```
 
-
-
-Obfuscation Support
+## Obfuscation Support
 
 Currently supported obfuscation mode:
 
-Option
-Description
-case
-Randomized case variation
+| Option | Description             |
+|--------|-------------------------|
+| `case`   | Randomized case variation |
 
-
-
-
-Example:
+**Example:**
 
 Original:
 
-Plain Text
-
-
+```
 UNION SELECT username FROM users
-
-
+```
 
 Obfuscated:
 
-Plain Text
-
-
+```
 uNiOn SeLeCt username FrOm users
-
-
+```
 
 This shows how simple transformations can impact signature-based detection.
 
-Defense Intelligence Output
+## Defense Intelligence Output
 
 Each generated payload may include simulated defensive analysis.
 
-Example:
+**Example:**
 
-JSON
-
-
+```json
 [
   {
     "blocked": true,
@@ -184,186 +121,114 @@ JSON
     "reason": "Matched known dangerous signatures"
   }
 ]
+```
 
+### Provides Insight Into
 
+*   Pattern matching detection
+*   Risk classification
+*   Signature triggers
+*   Why a payload would be blocked
 
-Provides Insight Into
-
-•
-Pattern matching detection
-
-•
-Risk classification
-
-•
-Signature triggers
-
-•
-Why a payload would be blocked
-
-Export Formats
+## Export Formats
 
 PayloadForge supports multiple export formats:
 
-Format
-Description
-terminal
-Print to CLI
-json
-Export JSON file
-txt
-Export plain text
-burp
-Burp Suite compatible list
-zap
-OWASP ZAP compatible list
-all
-Export all formats
+| Format     | Description               |
+|------------|---------------------------|
+| `terminal` | Print to CLI              |
+| `json`     | Export JSON file          |
+| `txt`      | Export plain text         |
+| `burp`     | Burp Suite compatible list |
+| `zap`      | OWASP ZAP compatible list |
+| `all`      | Export all formats        |
 
+### Default Filename Behavior
 
+If no custom filename is provided using `--filename`, PayloadForge generates a unique filename using this format:
 
+`payloadforge_<YYYYMMDD>_<HHMMSS>_<format>`
 
-Default Filename Behavior
+**Example:**
 
-If no custom filename is provided using --filename, PayloadForge generates a unique filename using this format:
-
-payloadforge_<YYYYMMDD>_<HHMMSS>_<format>
-
-Example:
-
-Bash
-
-
+```bash
 python -m payloadforge.payloadforge -m sqli -f zap
-
-
+```
 
 Generated file:
 
-payloadforge_20260220_022513_zap
+`payloadforge_20260220_022513_zap`
 
 Where:
 
-•
-YYYYMMDD → Date
+*   `YYYYMMDD` → Date
+*   `HHMMSS` → Time
+*   `format` → Selected export format
 
-•
-HHMMSS → Time
+### Custom Filename
 
-•
-format → Selected export format
-
-Custom Filename
-
-Bash
-
-
+```bash
 python -m payloadforge.payloadforge -m sqli -f json --filename custom_output
-
-
+```
 
 Generates:
 
-custom_output.json
+`custom_output.json`
 
-CLI Help
+## CLI Help
 
 To view all available options:
 
-Bash
-
-
+```bash
 python -m payloadforge.payloadforge -h
+```
 
+### Available Arguments
 
+| Flag          | Description                                    |
+|---------------|------------------------------------------------|
+| `-m`, `--module`    | Required. Select module: `sqli`, `xss`, `cmdi` |
+| `-e`, `--encode`    | Encoding mode: `none`, `url`, `base64`, `hex` |
+| `-o`, `--obfuscate` | Obfuscation mode (currently supports: `case`)  |
+| `-f`, `--format`    | Output format: `terminal`, `json`, `txt`, `burp`, `zap`, `all` |
+| `--filename`  | Custom export filename                         |
+| `-h`, `--help`      | Show help message                              |
 
-Available Arguments
+## Usage Examples
 
-Flag
-Description
--m, --module
-Required. Select module: sqli, xss, cmdi
--e, --encode
-Encoding mode: none, url, base64, hex
--o, --obfuscate
-Obfuscation mode (currently supports: case)
--f, --format
-Output format: terminal, json, txt, burp, zap, all
---filename
-Custom export filename
--h, --help
-Show help message
+*   Generate SQLi payloads:
 
+    ```bash
+    python -m payloadforge.payloadforge -m sqli
+    ```
 
+*   Generate XSS payloads with encoding:
 
+    ```bash
+    python -m payloadforge.payloadforge -m xss -e url
+    ```
 
-Usage Examples
+*   Generate CMDi payloads with obfuscation:
 
-•
-Generate SQLi payloads:
+    ```bash
+    python -m payloadforge.payloadforge -m cmdi -o case
+    ```
 
-Bash
+*   Export to JSON:
 
+    ```bash
+    python -m payloadforge.payloadforge -m sqli -f json
+    ```
 
-python -m payloadforge.payloadforge -m sqli
+*   Export all formats:
 
+    ```bash
+    python -m payloadforge.payloadforge -m xss -f all
+    ```
 
+## Project Structure
 
-
-
-•
-Generate XSS payloads with encoding:
-
-Bash
-
-
-python -m payloadforge.payloadforge -m xss -e url
-
-
-
-
-
-•
-Generate CMDi payloads with obfuscation:
-
-Bash
-
-
-python -m payloadforge.payloadforge -m cmdi -o case
-
-
-
-
-
-•
-Export to JSON:
-
-Bash
-
-
-python -m payloadforge.payloadforge -m sqli -f json
-
-
-
-
-
-•
-Export all formats:
-
-Bash
-
-
-python -m payloadforge.payloadforge -m xss -f all
-
-
-
-
-
-Project Structure
-
-Plain Text
-
-
+```
 payloadforge/
 │
 ├── payloadforge.py
@@ -378,24 +243,15 @@ payloadforge/
 │   ├── xss/
 │   └── cmdi/
 └── README.md
+```
 
-
-
-Ethical Usage
+## Ethical Usage
 
 This project is intended strictly for:
 
-•
-Educational purposes
-
-•
-Authorized security testing
-
-•
-Defensive research
-
-•
-Controlled lab environments
+*   Educational purposes
+*   Authorized security testing
+*   Defensive research
+*   Controlled lab environments
 
 Users are responsible for ensuring legal and ethical usage.
-
