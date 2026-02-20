@@ -207,3 +207,13 @@ Users are responsible for ensuring legal and ethical usage.
 
 PayloadForge aims to remain an educational, ethical security research framework.
 
+# Defense Intelligence Output
+
+PayloadForge simulates how defensive security systems (WAFs / filters) may classify generated payloads.
+
+Each payload may include a simulated defensive response in the terminal output.
+
+## Example Output
+```
+[Defense Info] {'blocked': True, 'detected_patterns': ['union select'], 'risk_level': 'high', 'reason': 'Matched known dangerous signatures'}
+```
