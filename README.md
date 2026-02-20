@@ -77,11 +77,14 @@ python -m payloadforge.payloadforge -m xss -e base64
 
 ## Obfuscation Support
 
-Currently supported obfuscation mode:
+Currently supported obfuscation modes:
 
-| Option | Description             |
-|--------|-------------------------|
-| `case`   | Randomized case variation |
+| Option     | Description                       |
+|------------|-----------------------------------|
+| `case`       | Randomized case variation         |
+| `whitespace` | Replace single spaces with multiple |
+| `tabs`       | Replace spaces with tabs          |
+| `all`        | Apply all obfuscation techniques  |
 
 **Example:**
 
