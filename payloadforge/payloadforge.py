@@ -23,12 +23,6 @@ from payloadforge.modules.sqli.sqli_module import SQLIModule
 from payloadforge.modules.xss.xss_module import XSSModule
 from payloadforge.modules.cmdi.cmdi_module import CMDIModule
 
-# Banner
-import pyfiglet
-from colorama import Fore, Style, init
-
-init(autoreset=True)
-
 
 def show_banner():
     if shutil.which("figlet") and shutil.which("lolcat"):
