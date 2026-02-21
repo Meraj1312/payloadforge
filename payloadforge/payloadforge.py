@@ -6,8 +6,7 @@ Main Controller
 from __future__ import annotations
 import argparse
 import sys
-import os
-import shutil
+
 
 
 # Core
@@ -23,14 +22,29 @@ from payloadforge.modules.sqli.sqli_module import SQLIModule
 from payloadforge.modules.xss.xss_module import XSSModule
 from payloadforge.modules.cmdi.cmdi_module import CMDIModule
 
+#Banner
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
+from pyfiglet import Figlet
+from colorama import init, Fore
+
+init(autoreset=True)
+console = Console()
+
 
 def show_banner():
-    if shutil.which("figlet") and shutil.which("lolcat"):
-        os.system('figlet PayloadForge | lolcat')
-    elif shutil.which("figlet"):
-        os.system('figlet PayloadForge')
-    else:
-        print("\n===== PayloadForge =====\n")
+    f = Figlet(font="slant")  # Try: doom, big, cyberlarge
+    banner = f.renderText("PayloadForge")
+
+    console.print(f"[bold magenta]{banner}[/bold magenta]")
+    console.print(
+        Panel.fit(
+            "[bold cyan]Educational Payload Generation Framework[/bold cyan]\n"
+            "[dim]Author: Meraj | Offensive Security Lab[/dim]",
+            border_style="bright_magenta",
+        )
+    )
 
 
 
