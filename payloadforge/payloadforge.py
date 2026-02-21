@@ -41,7 +41,7 @@ def show_banner():
     console.print(
         Panel.fit(
             "[bold cyan]Educational Payload Generation Framework[/bold cyan]\n"
-            "[dim]Author: Meraj | Offensive Security Lab[/dim]",
+            "[dim]Author: Team Omega | Offensive Security Lab[/dim]",
             border_style="bright_magenta",
         )
     )
