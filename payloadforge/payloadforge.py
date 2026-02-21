@@ -34,7 +34,7 @@ console = Console()
 
 
 def show_banner():
-    f = Figlet(font="slant")  # Try: doom, big, cyberlarge
+    f = Figlet(font="doom")  # Try: doom, big, cyberlarge
     banner = f.renderText("PayloadForge")
 
     console.print(f"[bold magenta]{banner}[/bold magenta]")
