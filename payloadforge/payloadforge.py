@@ -6,6 +6,9 @@ Main Controller
 from __future__ import annotations
 import argparse
 import sys
+import os
+import shutil
+
 
 # Core
 from payloadforge.core.exporter import Exporter
@@ -28,11 +31,13 @@ init(autoreset=True)
 
 
 def show_banner():
-    banner = pyfiglet.figlet_format("PayloadForge", font="slant")
-    print(Fore.CYAN + banner)
-    print(Fore.YELLOW + "Educational Payload Generation Framework")
-    print(Fore.GREEN + "Version: 1.0.0")
-    print(Fore.CYAN + "=" * 65 + Style.RESET_ALL)
+    if shutil.which("figlet") and shutil.which("lolcat"):
+        os.system('figlet PayloadForge | lolcat')
+    elif shutil.which("figlet"):
+        os.system('figlet PayloadForge')
+    else:
+        print("\n===== PayloadForge =====\n")
+
 
 
 def get_module(module_name: str):
